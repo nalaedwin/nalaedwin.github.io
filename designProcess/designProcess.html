@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Design Process</title>
+
+    <!-- bootstrap CSS -->
+    <link href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- google fonts stylesheet -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet" />
+
+    <!-- stylesheet -->
+    <link href="css/styles1.css" rel="stylesheet" />
+
+    <!-- Font-awsome-css -->
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
+
+
+    <!-- internal styles -->
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+
+        <div class="container">
+            <div class=" row justify-content-center">
+
+                <div class="col-md-9 padding-top">
+
+                    <h2 style="display: inline; color: red; margin-right: 50px;"> Design Process</h2>
+
+                    <a href="../index.html">
+
+                        <p style="display: inline; color: red;">
+                            <small>Home</small>
+                        </p>
+
+                    </a>
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container padding-top padding-bottom ">
+            <div class=" row justify-content-center">
+
+                <div class="col-md-9">
+
+                    <p class="white-text">
+                        My name is Nala E. Widjaja and I am a graduate student at Ohio University. I created this
+                        data visualization site with the guidance of my Professor <a href="http://www.data-visual.net/"
+                            target="_blank">Juan Thomassie</a>. The idea for this
+                        website came
+                        when I wrote a paper with the
+                        title <span style="font-style: italic;">“Blaming the Victim: Stigmatization on YouTube
+                            Comments Related to Opioid Addiction”</span>
+                        for my final project. For that project, I collected comments from a YouTube video and
+                        performed text, thematic, and sentiment analysis to analyze people's
+                        opinions toward opioid addiction. When I was writing for that paper, I
+                        faced a challenge on how to visualize the drug overdose mortality rate in the United States.
+                        This challenge motivated me to create a data visualization site on drug overdose data in the
+                        U.S. Below are the steps that I took in creating this site:
+                    </p>
+                    <h5 class="padding-top">01 Data Gathering and Cleaning </h5>
+
+                    <p class="white-text">
+                        The data for drug overdose mortality rates can be obtained from the <a
+                            href="https://www.cdc.gov/nchs/data-visualization/drug-poisoning-mortality/index.htm"
+                            target="_blank"> Center for Disease Control and Prevention (CDC)</a>.The data on CDC is
+                        on the CSV format, therefore, we have to convert it to the JSON format. Afterward, we
+                        needed to restructure so it would be suitable for the map. we can use <a
+                            href="https://lodash.com/docs/4.17.15" target="_blank">Lodash</a>
+                        to group the data based on county. The Snipped below shows
+                        the JSON data structure after I regrouped it by using Lodash:
+
+                    </p>
+                    <div class="padding-top">
+                        <img src="images/json.png" class="img-fluid" alt="Responsive image">
+                    </div>
+
+                    <p class="white-text padding-top">
+                        After that, we need to ‘tie’ this JSON data to the US map picture. For that, we need to
+                        obtain
+                        the shapefile of the U.S map and then joined it with the JSON data that we already built.
+                        The
+                        shapefile for the U.S map can be obtained from the Census Bureau site. I
+                        use
+                        Lodash to join the U.S map data and the JSON data for this project. As an alternative, we
+                        can
+                        use QGIS for this proses. The result of this proses is a GeoJSON file that contains the data
+                        of
+                        the drug overdose and the shapefile of the U.S data. The snipped below shows the GeoJson
+                        file
+                        for this project:
+                    </p>
+
+
+                    <div class="padding-top">
+                        <img src="images/geojson.png" class="img-fluid" alt="Responsive image">
+                    </div>
+
+                    <br>
+
+
+                    <h5 class="padding-top">02 Data visualization in Mapbox </h5>
+
+                    <p class="white-text">
+                        The second step in making this data visualization was to style the map based on the GeoJSON
+                        data that we created in the first step. For that, I used <a href="http://mapbox.com"
+                            target="_blank">Mapbox</a> to style the
+                        map for this project. Mapbox offers flexibility to customize the map based on the types of
+                        data
+                        that we have. Below is the Mapbox styling for this data:
+
+                        <div class="">
+                            <a href="https://api.mapbox.com/styles/v1/nalaedwin/ck7216tsq0x721iplnhzy7bon.html?fresh=true&title=view&access_token=pk.eyJ1IjoibmFsYWVkd2luIiwiYSI6ImNqc3l4cmxtZjBmb3U0M3BwMG1mdHgxa3YifQ.SuOkTsHVpb24Tdhs4933uQ#3.34/42.39/-101.17"
+                                target="_blank">
+                                <img src="images/mapbox.png" class="img-fluid" alt="Responsive image">
+
+                            </a>
+                        </div>
+
+                    </p>
+
+                    <h5 class="padding-top">03 Put the visualization on the web </h5>
+
+                    <h6 class="white-text">
+
+                        The last step was to put the map on the website. I used HTML, CSS, Bootstrap, and Javascript
+                        to build it. I also use chart.js to add an interactive chart, to show the death rate based
+                        on drug overdose by year.
+
+
+                        <div class="padding-top">
+                            <a href="../index.html" target="_blank">
+                                <img src="images/map.png" class="img-fluid" alt="Responsive image">
+                            </a>
+                        </div>
+                        </p>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- footer and contact -->
+
+        <footer id="contact" class="dark-footer">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-9">
+
+
+                        <p>Nala Widjaja </p>
+
+                        <i class="fas fa-envelope-open-text"></i>
+
+                        : nalaedwin@gmail.com</p>
+
+                        <i class="fas fa-envelope-open-text"></i>
+
+                        : nw995918@ohio.edu</p>
+
+                    </div>
+                </div>
+        </footer>
+
+        <!--END Footer -->
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>

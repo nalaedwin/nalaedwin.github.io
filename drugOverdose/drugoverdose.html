@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <title>Drug Overdose in the U.S</title>
+    <!-- Bootstrap CSS -->
+    <link href='https://unpkg.com/bootstrap/dist/css/bootstrap.min.css' rel='stylesheet' />
+    <!-- mapbox-gl-css -->
+    <link href="https://unpkg.com/mapbox-gl/dist/mapbox-gl.css" rel="stylesheet">
+    <!-- mapbox geoder -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.css'
+        rel='stylesheet' />
+    <link href='css/style5.css' rel='stylesheet' />
+</head>
+
+<body>
+
+
+    <div class="navbar1">
+
+        <h3 style="display: inline; margin-right: 7rem; margin-left: 2rem;"> Drug Overdose in the U.S
+        </h3>
+
+        <a href="../designProcess/designProcess.html">
+
+            <p style="display: inline; font-size: smaller; margin-right: 5rem;"> Design Process</p>
+
+        </a>
+
+       
+
+    </div>
+
+
+
+    <div class="all_wrapper">
+        <div id="map"></div>
+        <div class="boxYear">
+            <input id="slider1" class="slider" type="range" min="2003" max="2017" value="2017">
+            <div class=" row no-gutters ">
+                <div class="col text-white small-tx">2003</div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx"></div>
+                <div class="col text-white small-tx">2017</div>
+            </div>
+        </div>
+
+        <h1 class="tahun">2017</h1>
+        <div class="boxLegend">
+            <p style="color:white; text-align: center; font-size: x-small; ">Death rate per 100,000
+                <p>
+                    <div class="legend"></div>
+                    <div class="row no-gutters year">
+                        <div class="col text-white small-tx">2.24</div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx"></div>
+                        <div class="col text-white small-tx">130.34</div>
+                    </div>
+        </div>
+
+        <div class="box p-3 img-move">
+            <div id='assoc-info'>
+                <div id="chartContainer">
+                    <canvas id="myChart" width="100%" height="120%"></canvas>
+                </div>
+            </div>
+            <h6 id='tes' style="color: white; margin-top: 70px; padding-left: 2rem;">
+                Click the Map for More Information
+            </h6>
+            <a href="https://www.cdc.gov/nchs/data-visualization/drug-poisoning-mortality/index.htm" target="_ blank"
+                style="font-size: x-small;padding-left: 2rem;"> Data
+                : Center for Disease Control and Prevention
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS dependencies: jQuery, Popper, Bootstrap -->
+    <script src='https://unpkg.com/jquery/dist/jquery.min.js'></script>
+    <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+    <script src='https://unpkg.com/bootstrap/dist/js/bootstrap.min.js'></script>
+    <!-- mapbox-gl-js -->
+    <script src='https://unpkg.com/mapbox-gl/dist/mapbox-gl.js'></script>
+    <!-- Chart.JS - charting library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <!-- 
+    Chart.JS - charting library
+    <script src='https://unpkg.com/chart.js/dist/Chart.min.js'></script> -->
+    <!-- Lodash - a JS data utility -->
+    <script src="https://unpkg.com/lodash/lodash.min.js"></script>
+    <!-- Mapbox Geocoder for search function -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.4.2/mapbox-gl-geocoder.min.js">
+    </script>
+    <!-- DATA Mortality  state -->
+    <script src="js/county-mortality-data.js"></script>
+    <script src="js/negaraBagian.js"></script>
+    <script src="js/us-mortality-data.js"></script>
+    <script>
+        // global vars
+        let map;
+        let years = [2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017];
+        let drYears = ["dr2003", "dr2004", "dr2005", "dr2006", "dr2007", "dr2008", "dr2009", "dr2010", "dr2011",
+            "dr2012", "dr2013", "dr2014", "dr2015", "dr2016", "dr2017"
+        ];
+        let lineChart;
+        let ctx;
+        let minDeathRate = 2.24;
+        let maxDeathRate = 130.24;
+        let colorMin = "hsl(0,81%,100%)";
+        let colorMax = "hsl(0, 100%, 33%)";
+
+
+        var numString = function (num) {
+            var num_parts = num.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        };
+
+        // gets chart values from county data obj
+        let arrayValue = function (obj) {
+            let values = [];
+            for (let i = 0; i < drYears.length; i++) {
+                values.push(obj[drYears[i]]);
+            }
+            return values;
+        };
+
+
+        let countyMapClick = function (e) {
+            //getMapboxfeature on the map 
+            let mapboxFeature = e.features[0].properties;
+            console.log(mapboxFeature);
+            let values = arrayValue(mapboxFeature);
+            let countyLocation = mapboxFeature.co;
+            console.log(countyLocation);
+            let stateLocation = mapboxFeature.st;
+
+            //Crate a blue mark on the map
+            map.setFilter('county-hover', [
+                'in',
+                'fips',
+                mapboxFeature.fips,
+            ]);
+
+
+
+            // marker.remove();
+            //  filtering(stateLocation);
+            updateLineChartCounty(values, countyLocation);
+            updateLineChartState(stateLocation);
+        };
+
+
+
+        //county map
+        var newCountyMap = function () {
+
+            mapboxgl.accessToken =
+                'pk.eyJ1IjoibmFsYWVkd2luIiwiYSI6ImNqc3l4cmxtZjBmb3U0M3BwMG1mdHgxa3YifQ.SuOkTsHVpb24Tdhs4933uQ';
+
+            //MAP  Using : drugoverdose-2
+            map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/nalaedwin/ck7216tsq0x721iplnhzy7bon',
+                center: [-89.2, 39.16],
+                zoom: 3.52,
+                dragRotate: false,
+                pitchWithRotate: false,
+                //hash: true
+
+            });
+            map.setMaxZoom(18);
+
+
+            map.addControl(new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken,
+                flyTo: {
+                    speed: 0.8,
+                    curve: 1,
+                    bearing: 0,
+                    easing: function (t) {
+                        return t;
+                    }
+                },
+                marker: false,
+                mapboxgl: mapboxgl,
+                countries: 'us',
+                placeholder: 'Enter County or ZIP code'
+
+            }));
+
+            var popup = new mapboxgl.Popup({
+                closeButton: false,
+                closeOnClick: false,
+                offset: 10
+            });
+
+            map.on('load', function () {
+                map.on('click', 'county-fill', function (e) {
+                    countyMapClick(e);
+
+
+
+                });
+
+            });
+
+        };
+
+        // CHART JS
+        var newLineChart = function () {
+
+            ctx = $('#myChart');
+
+            Chart.defaults.global.defaultFontColor = 'white';
+
+
+            lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [{
+                        data: [9.14, 10.63, 12.35, 14.83, 17.26, 15.08, 12.25, 13.81, 17.29,
+                            15.75,
+                            15.32, 15.89, 16.79, 18.91, 19.77
+                        ],
+                        label: 'Athens,OH',
+                        fill: false,
+                        pointRadius: 1.9,
+                        lineTension: 0.1,
+                        pointHoverRadius: 2,
+                        fontColor: 'white',
+                        borderColor: 'red',
+                        backgroundColor: 'red'
+                    }, {
+                        data: [4.11, 6.77, 9.91, 10.84, 13.19, 13.84, 15.04, 10.72, 15.90, 17.54,
+                            18.40, 20.28, 23.66, 28.05, 37.27
+                        ],
+                        label: 'Ohio',
+                        fill: false,
+                        pointRadius: 1.9,
+                        lineTension: 0.1,
+                        pointHoverRadius: 2,
+                        backgroundColor: '#9799A6',
+                        borderColor: '#9799A6',
+                    }, {
+                        data: [8.8881, 9.366, 10.0884,
+                            11.5373, 11.9543, 11.9864, 12.0624, 12.4144, 13.2674,
+                            13.2208,
+                            13.9127, 14.7574, 16.304, 19.6925, 21.5637
+                        ],
+                        label: 'US',
+                        fill: false,
+                        pointRadius: 1.9,
+                        lineTension: 0.1,
+                        pointHoverRadius: 2,
+                        backgroundColor: '#515259',
+                        borderColor: '#515259',
+                    }]
+                },
+
+                options: {
+                    scales: {
+                        yAxes: [{
+                            gridLines: {
+                                drawOnChartArea: false,
+                                color: '#0D0D0D',
+
+                            },
+                            ticks: {
+                                min: 0,
+                                suggestedMax: 30,
+                                fontSize: 10,
+                                fontColor: '#CAC5CC'
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Death Rate per 100,000',
+                                fontSize: 11,
+                                fontColor: '#CAC5CC',
+                            }
+                        }],
+                        xAxes: [{
+                            gridLines: {
+                                drawOnChartArea: false,
+                                color: '#0D0D0D',
+
+                            },
+                            ticks: {
+                                fontSize: 10,
+                                fontColor: '#CAC5CC'
+
+                            },
+
+                        }]
+                    },
+                    tooltips: {
+                        backgroundColor: '#fff',
+                        cornerRadius: 0,
+                        bodyFontColor: '#333',
+                        titleFontColor: '#333',
+                        displayColors: true,
+                        borderColor: '#999',
+                        borderWidth: 0.5,
+                        xPadding: 10,
+                        xPadding: 8,
+                        callbacks: {
+
+
+                            label: function (tooltipItem, data) {
+                                var label = tooltipItem.yLabel + '';
+                                return label;
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1500
+                    },
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12,
+                            fontSize: 10,
+                            fontColor: '#CAC5CC'
+                        },
+
+                        onHover: function (e) {
+                            e.target.style.cursor = 'pointer';
+
+                        }
+                    },
+                    hover: {
+                        onHover: function (e) {
+                            var point = this.getElementAtEvent(e);
+                            if (point.length) e.target.style.cursor = 'pointer';
+                            else e.target.style.cursor = 'default';
+                        }
+
+                    },
+                    title: {
+                        display: true,
+                        text: 'Mortality Rate Chart',
+                        fontSize: 20,
+                        padding: 20,
+                        fontColor: '#BDBEBF'
+
+                    },
+
+                }
+
+            });
+
+            //click event on the linechart 
+            ctx.on('click', function (e) {
+
+                console.log(e);
+
+                let chartProperties = lineChart.getElementsAtEvent(
+                    e);
+                console.log(chartProperties);
+
+                if (chartProperties[0]['_index'] != undefined) { // if i click on the chart 
+                    let yearChart = chartProperties[0]._chart.config.data.labels;
+                    index = chartProperties[0]['_index'];
+                    console.log('click', yearChart, index);
+
+                    $('.tahun').html(`${yearChart[index]}`);
+                    $("#slider1").val(yearChart[index]);
+                    $("#slider1").trigger('change');
+
+                };
+
+                let chartProps = [
+                    'dr2003',
+                    'dr2004',
+                    'dr2005',
+                    'dr2006',
+                    'dr2007',
+                    'dr2008',
+                    'dr2009',
+                    'dr2010',
+                    'dr2011',
+                    'dr2012',
+                    'dr2013',
+                    'dr2014',
+                    'dr2015',
+                    'dr2016',
+                    'dr2017'
+                ];
+                console.log('click', chartProps[index]);
+                clickChangeMapData(chartProps[index]);
+
+            });
+
+        };
+
+        //update linechart for county
+        var updateLineChartCounty = function (values, countyLocation) {
+            lineChart.config.data.datasets[0].data = values;
+            lineChart.config.data.datasets[0].label = countyLocation;
+            lineChart.update();
+        };
+
+        //filter state
+        let filterState = function (stateLocation) {
+            let stateObj = _.find(negaraBagian, function (o) {
+                return o.st === stateLocation;
+            });
+            return (arrayValue(stateObj));
+        };
+
+        //update linechart for state
+        var updateLineChartState = function (state) {
+
+            lineChart.config.data.datasets[1].data = filterState(state);
+            lineChart.config.data.datasets[1].label = state;
+            lineChart.update();
+        };
+
+        var killLineChart = function () {
+            lineChart.destroy();
+        };
+
+        //   slider
+        let initSlider = function () {
+            $('#slider1').on('input', function (e) {
+                let val_year = e.currentTarget.value;
+                sliderChangeMapData(val_year);
+                $('.tahun').html(`${val_year}`);
+                console.log(val_year);
+
+            });
+        };
+
+        let sliderChangeMapData = function (yr) {
+            let newYr = `dr${yr}`;
+            let mapboxExp = [
+                "interpolate",
+                ["exponential", 0.95],
+                ["get", newYr],
+                minDeathRate,
+                colorMin,
+                maxDeathRate,
+                colorMax
+            ];
+            map.setPaintProperty('county-fill', 'fill-color', mapboxExp);
+
+        };
+
+
+        let clickChangeMapData = function (propNm) {
+            // expression
+            let mapboxEx = [
+                "interpolate",
+                ["exponential", 0.95],
+                ["get", propNm],
+                minDeathRate,
+                colorMin,
+                maxDeathRate,
+                colorMax
+            ];
+
+            map.setPaintProperty('county-fill', 'fill-color', mapboxEx);
+        };
+
+        //call the functions 
+
+        newCountyMap();
+        newLineChart();
+        initSlider();
+    </script>
+
+</body>
+
+</html>

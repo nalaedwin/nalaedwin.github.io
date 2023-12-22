@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset='utf-8' />
+    <title>Corona_Virus</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css'
+        rel='stylesheet' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|PT+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link href='css/coronaVersion3.css' rel='stylesheet' />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="container-fluid map">
+            <div class="row">
+                <div class="col-md-12" style="background-color:#262626;">
+
+                    <div class="navbar ml-3">
+
+                        <h2 class = "title" style="color: red;">Coronavirus in The United States</h2>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div id='map'></div>
+            </div>
+            <div class="box_beside_map col-md-4">
+                <div id="cities">
+                    <section id="us" class="active">
+                        <h5>The United States</h5>
+                        <p>
+
+                            Until 22 April more than 40,000 people have died due to coronavirus in the U.S, according to
+                            <i>the New York Times</i>. This virus also infected more than 800,000 persons in this
+                            country. The
+                            government is trying hard to curb the coronavirus spreading. the data mapping using <i> the
+                                New York
+                                time </i> data indicated that big cities such as New York City, Detroit, Chicago
+                            Seattle, Miami, and Los Angles have become the epicenter of this virus. The cities with the
+                            high cases usually form a cluster with the surrounding areas, for example, New York City
+                            forms a cluster with several counties in New Jersey.
+                            This cluster may occur because people commute from New Jersey to New York City and vice
+                            versa.
+                        </p>
+                        <div class="tombol">
+
+                            <button id="all" type="button" value="all"
+                                class="btn btn-sm mr-2 mb-2 p-1 btn-light active">
+                                All Cities </button>
+                            <button id="clustered" type="button" value="clustered"
+                                class="btn btn-sm mb-2 p-1 btn-light">
+                                Clustered Cities</button>
+                        </div>
+                        <p>Source: Data from <a
+                                href="https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html"
+                                target="_blank">The New York Times</a></p>
+                    </section>
+                    <section id="newyork">
+                        <h5>New York City</h5>
+                        <p>
+
+                            As of Sunday (4/26/2020), more than 10 thousand people have died due to Coronavirus in New
+                            York City, according to <i>the New York Times </i>. This virus also has sickened more than
+                            150,000 people in this city. New York City
+                            has the highest number of coronavirus cases in the U.S. Coronavirus also crippled this city,
+                            New York City that usually never sleep now is quiet and empty. The YouTube video from
+                            <i>The Newyorker</i> below showed the condition of New York City during the Coronavirus
+                            pandemic.
+
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/rYTNO_WtNys"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen></iframe>
+
+                            </div>
+                        </p>
+                    </section>
+                    <section id="massachusetts">
+                        <h5>Massachusetts</h5>
+                        <p>
+
+                            Massachusetts also has been hit hard by Coronavirus. Drone footage from <i>Boston Globe
+                            </i>below
+                            revealed the empty street of Boston.
+                            Based on <i>the New York Times </i> data on 26 April there were more than 9,000 cases have
+                            been
+                            reported in Boston. Furthermore,
+                            there ware more than 300 people die because of this virus in this city.
+
+                        </p>
+
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dXqj3Xowhfg"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+                        </div>
+                    </section>
+
+                    <section id="michigan">
+
+                        <h5>Michigan</h5>
+                        <p>
+                            Not all people agree with government policies to curb the coronavirus spreading. For
+                            example, thousands of people demonstrated demanding lockdown regulation be lifted in
+                            Michigan.
+                            They argued that the lockdown regulation created unemployment and economic hardship in this
+                            city. YouTube video uploaded by <i> the Guardian </i>showed they gathered in the front
+                            of the Lansing City hall waving the American flag and honking their car horn.
+
+                        </p>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/4b6GvszlkR0"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        </div>
+                    </section>
+                    <section id="california">
+                        <h5>California</h5>
+                        <p>
+
+                            YouTube video from <i>Voice of America (VOA) </i>below depicted the condition on San
+                            Fransico on 22
+                            March 2020.
+                            From that footage, we can see that the street was empty and almost nobody walking on the
+                            street of San Fransico.
+                            The worst area that was hit by coronavirus infection is Los Angles. Based on the New York
+                            Times data on 26 April there were more than 19,000 cases have been reported in Los Angles.
+                            Furthermore, there ware more than 800 people die because of this virus in this city.
+
+                        </p>
+
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/yQky8qARcwc"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        </div>
+                    </section>
+                    <section id="illinois">
+                        <h5>Illinois</h5>
+                        <p>
+                            Chicago is one of the cities in Illinois that has the highest coronavirus case. Similar to
+                            Los Angles or New York City, Chicago also implements
+                            regulation to curb coronavirus spreading. Drone footage from the ABC news below showed the
+                            condition of Chicago during the lockdown.
+
+                        </p>
+
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/cQZPa_VQnvU"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        </div>
+                    </section>
+                    <section id="florida">
+                        <h5>Florida</h5>
+                        <p>
+
+                            Drone footage from the <i>Miami Herald </i>below showed the condition of the beach in the
+                            Miami
+                            area. This city has the highest case of coronavirus in Florida. From the footage,
+                            we can see that the Miami beach that usually crowded is empty. Furthermore, the streets also
+                            very quiet and empty.
+
+                        </p>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/MW2EFM5JFX4"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                    </section>
+
+                    <section id="whasington">
+                        <h5>Washington State</h5>
+                        <p>
+
+                            Coronavirus also affected the life condition in Seattle. The largest city in Washington
+                            state feels so empty.
+                            People try to stay at home to avoided coronavirus infection. The Youtube video below showed
+                            the condition of Seattle.
+                        </p>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/kUT4qEwqwzE"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                    </section>
+
+                    <section id="louisiana">
+                        <h5>Louisiana</h5>
+                        <p>
+
+                            Coronavirus also affected Lousiana. Two areas that have the higest corona virus cases are
+                            Orelan Parish and Jefferson Parish. The drone footage from
+                            Whasington Post depicted the condition on the New Orelans during the coronavirus pandemic.
+
+
+                        </p>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Ggfz0xGgua8"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- bootstrap dependencies: jquery, popper, bootstrap -->
+    <script src='https://unpkg.com/jquery/dist/jquery.min.js'></script>
+    <script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+    <script src='https://unpkg.com/bootstrap/dist/js/bootstrap.min.js'></script>
+
+    <!-- mapbox gl js -->
+    <script src='https://unpkg.com/mapbox-gl/dist/mapbox-gl.js'></script>
+
+    <!-- nyt state data geojson -->
+    <script src='js/county.js'></script>
+
+    <script>
+        let filterCase;
+        let geoJson = county;
+        let map;
+        let popup = new mapboxgl.Popup({
+            offset: 12
+        });
+        let casesCircle = {
+            'circle-radius': [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                2,
+                [
+                    "/",
+                    [
+                        "sqrt",
+                        [
+                            "to-number",
+                            ["get", "CASES"]
+                        ]
+                    ],
+                    11
+                ],
+                8,
+                [
+                    "/",
+                    [
+                        "sqrt",
+                        [
+                            "to-number",
+                            ["get", "CASES"]
+                        ]
+                    ],
+                    2
+                ]
+            ],
+            'circle-color': "hsla(0, 100%, 49%, 0.3)",
+            'circle-stroke-color': "hsla(0, 100%, 49%, 0.6)",
+            'circle-stroke-width': 1
+        };
+        let deathCircle = {
+            'circle-radius': [
+                "interpolate",
+                ["linear"],
+                ["zoom"],
+                2,
+                [
+                    "/",
+                    [
+                        "sqrt",
+                        [
+                            "to-number",
+                            ["get", "DEATHS"]
+                        ]
+                    ],
+                    11
+                ],
+                8,
+                [
+                    "/",
+                    [
+                        "sqrt",
+                        [
+                            "to-number",
+                            ["get", "DEATHS"]
+                        ]
+                    ],
+                    2
+                ]
+            ],
+            'circle-color': "hsla(0, 0%, 100%, 0.5)",
+            'circle-stroke-color': "hsla(0, 0%, 100%, 0.6)",
+            'circle-stroke-width': 1
+        };
+        //string to number 
+        let showPopup = function (e) {
+            //
+            let data = e.features[0].properties;
+            let coords = e.lngLat;
+            // for state
+            let place = data.STATE;
+            // if county
+            if (data.NAME_2) {
+                place = `${data.NAME_2}, ${data.ST}`;
+            };
+            let html = `
+            <div class="pop">
+                <span class="bolder">${place}</span><br>
+                <span class="bold">Total cases:</span> ${numStr(+data.CASES)}<br>
+                <span class="bold">Total deaths:</span> ${numStr(+data.DEATHS)}<br>
+            </div>
+            `;
+
+            popup.setLngLat(coords)
+                .setHTML(html)
+                .addTo(map);
+        };
+
+        // format numbers
+        let numStr = function (num) {
+            if (num === 'NA' || num === '' || isNaN(num)) {
+                return num;
+            } else {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+            }
+        };
+
+
+        //map: coronaMap
+
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoibmFsYWVkd2luIiwiYSI6ImNqc3l4cmxtZjBmb3U0M3BwMG1mdHgxa3YifQ.SuOkTsHVpb24Tdhs4933uQ';
+        map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/nalaedwin/ck8stdnc50n691in158qpq2o9',
+            center: [-98.052, 39.962],
+            zoom: 3.3,
+
+        });
+
+
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+
+
+        var cities = {
+            'us': {
+                bearing: 0,
+                pich: 0,
+                center: [-98.052, 39.962],
+                zoom: 3.3,
+
+            },
+            'newyork': {
+                duration: 6000,
+                bearing: 27,
+                center: [-74.097, 40.772],
+                zoom: 6,
+                pitch: 20,
+            },
+            'massachusetts': {
+                duration: 6000,
+                center: [-71.382439, 42.407211],
+                bearing: 150,
+                zoom: 6,
+                pitch: 0
+            },
+            'michigan': {
+                duration: 6000,
+                bearing: 90,
+                center: [-83.045753, 42.331429],
+                zoom: 6,
+                speed: 0.6,
+                pitch: 40
+            },
+            'california': {
+                duration: 6000,
+                bearing: 90,
+                center: [-119.417931, 36.778259],
+                zoom: 6
+            },
+            'illinois': {
+                duration: 6000,
+                bearing: 45,
+                center: [-87.623177, 41.881832],
+                zoom: 6,
+                pitch: 20,
+                speed: 0.5
+            },
+            'florida': {
+                duration: 6000,
+                bearing: 180,
+                center: [-81.760254, 27.994402],
+                zoom: 6
+            },
+            'whasington': {
+                duration: 6000,
+                bearing: 90,
+                center: [-122.335167, 47.608013],
+                zoom: 6,
+                pitch: 40
+            },
+            'louisiana': {
+                duration: 6000,
+                bearing: 90,
+                center: [-90.071533, 29.951065],
+                zoom: 6,
+                pitch: 20
+            }
+        };
+
+
+        $(".box_beside_map").scroll(function () {
+            var namaNamaKota = Object.keys(cities);
+            for (var i = 0; i < namaNamaKota.length; i++) {
+                var namaKota = namaNamaKota[i];
+                if (checkIfCityOnScreen(namaKota)) {
+                    flyToThatCity(namaKota);
+                    break;
+                }
+            }
+
+        });
+
+
+        function checkIfCityOnScreen(id) {
+
+            var element = document.getElementById(
+                id);
+            var bounds = element.getBoundingClientRect();
+            let c = bounds.bottom > 500;
+            return c;
+
+        }
+
+        var activenamaKota = 'us';
+
+
+        function flyToThatCity(namaKota) {
+            if (namaKota === activenamaKota) return;
+
+            map.flyTo(cities[namaKota]);
+
+            document.getElementById(namaKota).setAttribute('class', 'active');
+            document.getElementById(activenamaKota).setAttribute('class', '');
+
+            activenamaKota = namaKota;
+        }
+
+
+        // once map is loaded...
+        map.on('load', function () {
+
+            // add source (geojson)
+            map.addSource('cases', {
+                'type': 'geojson',
+                'data': geoJson
+            });
+
+            // add cases layer
+            map.addLayer({
+                'id': 'cases',
+                'type': 'circle',
+                'source': 'cases',
+                'paint': casesCircle
+            });
+
+            // add deaths layer
+            map.addLayer({
+                'id': 'deaths',
+                'type': 'circle',
+                'source': 'cases',
+                'paint': deathCircle
+            });
+
+            map.on('mousemove', 'cases', function (e) {
+                // change cursor style - UI indicator
+                map.getCanvas().style.cursor = 'pointer';
+                showPopup(e);
+            });
+
+            // add 'leave' event to 'cases' layer
+            map.on('mouseleave', 'cases', function () {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+        });
+
+
+        let initButtons = function () {
+            //
+            $('#all').on('click', function () {
+                $('.tombol').toggleClass('active');
+
+
+                $('#clustered').removeClass('active');
+                $('#all').addClass('active');
+
+
+                filterCase = ['!=', ['string', ['get', 'CASES']], '-1'];
+
+                // console.log(filterCase);
+
+                map.setFilter('cases', ['all', filterCase]);
+                map.setFilter('deaths', ['all', filterCase]);
+            });
+            $('#clustered').on('click', function () {
+
+                $('#all').removeClass('active');
+                $('#clustered').addClass('active');
+
+
+                filterCase = [
+                    'match',
+                    ['get', 'FIPS'],
+                    ['36998', '36059', '36119', '36103', '17031', '26163', '34003', '06037', '12086',
+                        '34017', '22071', '36087', '22051', '53033', '12011', '12099', '26125', '26099',
+                        '17043', '06059', '48201', '48157', '06085', '06081', '06001', '06013', '13229',
+                        '53061', '55079', '17097', '25025', '09007', '25021', '25009', '25027', '42101',
+                        '42045', '34029'
+                    ],
+                    true,
+                    false
+                ]
+
+                map.setFilter('deaths', ['all', filterCase]);
+                map.setFilter('cases', ['all', filterCase]);
+
+            });
+        };
+
+        initButtons();
+    </script>
+
+</body>
+
+</html>

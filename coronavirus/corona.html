@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+    <meta charset='utf-8' />
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <title>nalaedwin.com</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link href='css/aturUlang1.css' rel='stylesheet' />
+
+
+</head>
+
+<body>
+
+    <div class="navbar1" style="background-color: black; padding: 10px;">
+
+        <h3> Mapping the Spread of
+            Coronavirus
+        </h3>
+
+        <a href="../index.html" style="font-size: smaller;">
+
+            Drug Overdose Data Visualization
+        </a>
+
+    </div>
+
+    <div class="all_wrapper">
+        <div id="map"></div>
+        <h1 id="banner">6/8/20</h1>
+        <div class="boxUI">
+            <h6>Categories </h6>
+            <div id="checkbox" ;>
+                <input id="death" type="checkbox" class="filter checkbox-inline" checked="checked" />
+                <label for="all">Death</label>
+                <br>
+                <input id="case" type="checkbox" class="filter checkbox-inline" checked="checked" />
+                <label for="regionalCampus">Cases </label>
+            </div>
+
+            <br>
+            <p id="bulan" style="margin-bottom: 0px; color: white;">6/8/20</p>
+            <input id="slider1" class="slider" type="range" min="0" max="138" value="138" id="slider" step="1">
+            <a href="https://github.com/CSSEGISandData/COVID-19" target="_ blank" style="font-size: x-small;">Data
+                source: Johns Hopkins
+                University</a>
+        </div>
+
+        <div class="boxBesideMap">
+            <h6> Number of Cases in Five Countries</h6>
+            <br>
+            <div id="chartContainer">
+                <canvas id="myChart" width="100%" height="120%"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <!-- mapbox gl js -->
+    <script src='https://unpkg.com/mapbox-gl/dist/mapbox-gl.js'></script>
+    <!-- Chart.JS - charting library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+    <!-- nyt state data geojson -->
+
+    <script src='js/coronaCase.js'></script>
+    <script src='js/coronaDeath.js'></script>
+
+    <script>
+        let filter = document.querySelectorAll('input.filter');
+        let lineChart;
+        let ctx;
+        let angka;
+        let popup = new mapboxgl.Popup({
+            offset: 12
+        });
+
+        let mapboxFeature;
+
+        var numString = function (num) {
+            var num_parts = num.toString().split(".");
+            num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return num_parts.join(".");
+        };
+
+
+
+        let bulan = ['1/22/20', '1/23/20', '1/24/20', '1/25/20', '1/26/20', '1/27/20', '1/28/20', '1/29/20',
+            '1/30/20',
+            '1/31/20', '2/1/20', '2/2/20', '2/3/20', '2/4/20', '2/5/20', '2/6/20', '2/7/20', '2/8/20', '2/9/20',
+            '2/10/20', '2/11/20', '2/12/20', '2/13/20', '2/14/20', '2/15/20', '2/16/20', '2/17/20', '2/18/20',
+            '2/19/20', '2/20/20', '2/21/20', '2/22/20', '2/23/20', '2/24/20', '2/25/20', '2/26/20', '2/27/20',
+            '2/28/20', '2/29/20', '3/1/20', '3/2/20', '3/3/20', '3/4/20', '3/5/20', '3/6/20', '3/7/20', '3/8/20',
+            '3/9/20', '3/10/20', '3/11/20', '3/12/20', '3/13/20', '3/14/20', '3/15/20', '3/16/20', '3/17/20',
+            '3/18/20', '3/19/20', '3/20/20', '3/21/20', '3/22/20', '3/23/20', '3/24/20', '3/25/20', '3/26/20',
+            '3/27/20', '3/28/20', '3/29/20', '3/30/20', '3/31/20', '4/1/20', '4/2/20', '4/3/20', '4/4/20', '4/5/20',
+            '4/6/20', '4/7/20', '4/8/20', '4/9/20', '4/10/20', '4/11/20', '4/12/20', '4/13/20', '4/14/20',
+            '4/15/20', '4/16/20', '4/17/20', '4/18/20', '4/19/20', '4/20/20', '4/21/20', '4/22/20', '4/23/20',
+            '4/24/20', '4/25/20', '4/26/20', '4/27/20', '4/28/20', '4/29/20', '4/30/20', '5/1/20', '5/2/20',
+            '5/3/20', '5/4/20', '5/5/20', '5/6/20', '5/7/20', '5/8/20', '5/9/20', '5/10/20', '5/11/20', '5/12/20',
+            '5/13/20', '5/14/20', '5/15/20', '5/16/20', '5/17/20', '5/18/20', '5/19/20', '5/20/20', '5/21/20',
+            '5/22/20', '5/23/20', '5/24/20', '5/25/20', '5/26/20', '5/27/20', '5/28/20', '5/29/20', '5/30/20',
+            '5/31/20', '6/1/20', '6/2/20', '6/3/20', '6/4/20', '6/5/20', '6/6/20', '6/7/20', '6/8/20'
+        ];
+
+
+        let tanggal = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
+            '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32', '33',
+            '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+            '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67',
+            '68', '69', '70', '71', '72', '73', '74', '75', '76', '77', '78', '79', '80', '81', '82', '83', '84',
+            '85', '86', '87', '88', '89', '90', '91', '92', '93', '94', '95', '96', '97', '98', '99', '100', '101',
+            '102', '103', '104', '105', '106', '107', '108', '109', '110', '111', '112', '113', '114', '115', '116',
+            '117', '118', '119', '120', '121', '122', '123', '124', '125', '126', '127', '128', '129', '130', '131',
+            '132', '133', '134', '135', '136', '137', '138'
+        ];
+
+
+
+        let arrayMabox = function (obj) {
+            let values = [];
+            for (let i = 0; i < 140; i++) {
+                values.push(obj[tanggal[i]]);
+
+            }
+            return values;
+
+        };
+
+
+
+        let arrayValue = function (obj) {
+            let values = [];
+            for (let i = 0; i < 139; i++) {
+                values.push(obj[bulan[i]]);
+
+            }
+            return values;
+
+        };
+
+
+
+
+
+        mapboxgl.accessToken =
+            'pk.eyJ1IjoibmFsYWVkd2luIiwiYSI6ImNqc3l4cmxtZjBmb3U0M3BwMG1mdHgxa3YifQ.SuOkTsHVpb24Tdhs4933uQ';
+        map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/nalaedwin/ckbeev7382jcm1iqoru38r8tu',
+            center: [31, 18.8],
+            zoom: 1.35,
+            // minZoom: 1.5,
+            dragRotate: false,
+            pitchWithRotate: false
+
+
+        });
+
+
+
+        map.on('load', function () {
+
+
+            map.on('mousemove', 'case', function (e) {
+
+                mapboxFeature = e.features[0].properties;
+                map.getCanvas().style.cursor = 'pointer';
+
+                html = `<div class = "aturPopup">
+                <h6 style="color: black;">${mapboxFeature['Country/Region']} </h6> 
+                <p style="margin-bottom: 0px; color: black;">Case : ${numString (mapboxFeature[138])} </p> 
+                </div> 
+                `;
+
+                let data = e.features[0].properties[138];
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(map);
+            });
+
+            map.on('mouseleave', 'case', function () {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+
+            map.on('mousemove', 'death', function (e) {
+
+                mapboxFeature = e.features[0].properties;
+                map.getCanvas().style.cursor = 'pointer';
+                html = `<div class = "aturPupup">
+                <h6 style="color: black;"> ${mapboxFeature['Country/Region']} </h6> 
+                <p style="margin-bottom: 0px; color: black;">Death : ${numString (mapboxFeature[138])} </p> 
+                </div> 
+                `;
+
+                let data = e.features[0].properties[138];
+                popup.setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(map);
+            });
+
+            map.on('mouseleave', 'death', function () {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+
+
+
+            let filterLayer = function (day) {
+
+                map.setPaintProperty('case', 'circle-radius', [
+                    "interpolate", ["linear"],
+                    ["zoom"],
+                    1.5, ["/", ["sqrt", ["get", day]], 12],
+                    7.5, ["/", ["sqrt", ["get", day]], 12]
+                ]);
+
+                map.setPaintProperty('death', 'circle-radius', [
+                    "interpolate", ["linear"],
+                    ["zoom"],
+                    1.5, ["/", ["sqrt", ["get", day]], 12],
+                    7.5, ["/", ["sqrt", ["get", day]], 12]
+                ]);
+
+            };
+
+        });
+
+        let filterLayer = function (day) {
+
+            map.setPaintProperty('case', 'circle-radius', [
+                "interpolate", ["linear"],
+                ["zoom"],
+                1.5, ["/", ["sqrt", ["get", day]], 12],
+                7.5, ["/", ["sqrt", ["get", day]], 12]
+            ]);
+
+            map.setPaintProperty('death', 'circle-radius', [
+                "interpolate", ["linear"],
+                ["zoom"],
+                1.5, ["/", ["sqrt", ["get", day]], 12],
+                7.5, ["/", ["sqrt", ["get", day]], 12]
+            ]);
+
+        };
+
+        document.getElementById('slider1').addEventListener('input', function (e) {
+
+            let day = e.target.value;
+
+
+
+            filterLayer(day);
+            angka = `${day}`;
+            updateLineChartCounty(angka);
+
+            //      $('#bulan').html(`<p>Date: ${bulan[angka]}</p>`);
+            $('#bulan').html(bulan[angka]);
+
+            $('#banner').html(bulan[angka]);
+
+
+            map.on('mousemove', 'case', function (e) {
+
+                map.getCanvas().style.cursor = 'pointer';
+                html = `<div>
+                <h6 style="color: black;">${mapboxFeature['Country/Region']} </h6> 
+                 <p style="margin-bottom: 0px; color: black;">Case : ${numString(mapboxFeature[angka])} </p> 
+                </div> 
+                `;
+
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(map);
+            });
+
+            map.on('mouseleave', 'case', function () {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+
+            map.on('mousemove', 'death', function (e) {
+                map.getCanvas().style.cursor = 'pointer';
+                html = `<div>
+                <h6 style= "color: black">${mapboxFeature['Country/Region']} </h6> 
+                <p style="margin-bottom: 0px; color: black;">Death : ${numString (mapboxFeature[angka])} </p> 
+                </div> 
+                `;
+
+
+                popup.setLngLat(e.lngLat)
+                    .setHTML(html)
+                    .addTo(map);
+            });
+
+            map.on('mouseleave', 'death', function () {
+                map.getCanvas().style.cursor = '';
+                popup.remove();
+            });
+
+
+
+
+        });
+
+
+        for (let i = 0; i < filter.length; i++) {
+
+            filter[i].addEventListener('change',
+                function (e) {
+
+                    layerID = e.target.id;
+                    map.setLayoutProperty(
+                        layerID,
+                        'visibility',
+                        e.target.checked ? 'visible' : 'none',
+
+                    );
+                });
+
+        };
+
+
+
+        let rusia = arrayValue(coronaCase[187]);
+        let brazil = arrayValue(coronaCase[28]);
+        let uk = arrayValue(coronaCase[223]);
+        let us = arrayValue(coronaCase[225]);
+        let india = arrayValue(coronaCase[131]);
+
+
+
+        let rusiaDeath = arrayValue(coronaDeath[187]);
+        let brazilDeath = arrayValue(coronaDeath[28]);
+        let ukDeath = arrayValue(coronaDeath[223]);
+        let usDeath = arrayValue(coronaDeath[225]);
+        let indiaDeath = arrayValue(coronaDeath[131]);
+
+        ctx = $('#myChart');
+
+        Chart.defaults.global.defaultFontColor = 'white';
+
+        lineChart = new Chart(ctx, {
+            type: 'horizontalBar',
+            data: {
+                labels: ['US', 'Brazil', 'Rusia', 'UK', 'India'],
+                datasets: [
+
+                    {
+                        data: [1961428, 707412, 476043, 287399, 265928],
+                        label: 'case',
+                        fill: false,
+                        pointHoverRadius: 2,
+                        fontColor: 'white',
+                        borderColor: '#953434',
+                        backgroundColor: '#953434'
+
+                    }, {
+                        data: [111011, 37134, 5963, 40597, 7473],
+                        label: 'death',
+                        fill: false,
+                        pointRadius: 1.9,
+                        lineTension: 0.1,
+                        pointHoverRadius: 2,
+                        backgroundColor: '#847f7f',
+                        borderColor: '#847f7f',
+                    },
+
+
+                ]
+
+            },
+            options: {
+                tooltips: {
+
+                    callbacks: {
+                        title: function (item, data) {
+                            return `${item[0].yLabel}`;
+                        },
+                        label: function (item, data) {
+                            return `${item.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+                        }
+                    },
+
+                    mode: 'nearest',
+                    backgroundColor: '#fff',
+                    borderColor: '#99999966',
+                    bodyFontColor: '#333',
+                    bodyFontSize: 12,
+                    titleFontColor: '#333',
+                    titleFontSize: 12,
+                    displayColors: false,
+                    cornerRadius: 3,
+                    borderWidth: 0.5,
+                    xPadding: 12,
+                    yPadding: 12,
+                    caretSize: 10
+                },
+
+                scales: {
+                    xAxes: [{
+                        // display: false,
+                        ticks: {
+                            min: 0,
+                            suggestedMax: 40,
+                            fontSize: 10
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            fontSize: 10
+                        }
+                    }]
+                }
+
+            }
+
+
+
+        });
+
+
+        var updateLineChartCounty = function (x) {
+            lineChart.config.data.datasets[0].data = [us[x]];
+            lineChart.config.data.datasets[0].data[1] = [brazil[x]];
+            lineChart.config.data.datasets[0].data[2] = [rusia[x]];
+            lineChart.config.data.datasets[0].data[3] = [uk[x]];
+            lineChart.config.data.datasets[0].data[4] = [india[x]];
+
+            lineChart.config.data.datasets[1].data = [usDeath[x]];
+            lineChart.config.data.datasets[1].data[1] = [brazilDeath[x]];
+            lineChart.config.data.datasets[1].data[2] = [rusiaDeath[x]];
+            lineChart.config.data.datasets[1].data[3] = [ukDeath[x]];
+            lineChart.config.data.datasets[1].data[4] = [indiaDeath[x]];
+
+            lineChart.update();
+
+        };
+    </script>
+
+</body>
+
+</html>

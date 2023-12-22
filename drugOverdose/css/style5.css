@@ -1,0 +1,326 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: black;
+
+}
+
+
+.title {
+
+    border: 1px solid black;
+    background-color: #7C92A6;
+    color: #BF2A37;
+
+}
+
+
+.all_wrapper {
+
+    position: relative;
+
+}
+
+/* 
+#map {
+
+    height: 91vh;
+    width: 100%;
+    position: relative;
+    cursor: pointer !important;
+
+
+} */
+
+
+
+.navbar1 {
+
+    padding: 1rem;
+    color: red;
+
+
+}
+
+
+a {
+
+    color: red;
+
+}
+
+
+
+a:hover {
+    color: white;
+}
+
+
+
+
+
+/* for big screen (using min-width) */
+
+@media (min-width:769px) {
+    .img-move {
+        position: absolute;
+        width: 29%;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        transition: width 2s ease-in;
+    }
+
+    .boxLegend {
+
+        position: absolute;
+        width: 12%;
+        bottom: 50px;
+        right: 500px;
+
+
+    }
+
+
+    .boxYear {
+        transform: rotate(-90deg);
+        width: 25%;
+        position: absolute;
+        left: -80px;
+        top: 40%;
+
+
+    }
+
+
+    .tahun {
+
+        position: absolute;
+        top: 200px;
+        color: #f5f5f56b;
+        font-size: 150px;
+        left: 30%;
+        pointer-events: none;
+
+    }
+
+
+    .mapboxgl-ctrl-top-right {
+        top: 2%;
+        right: 80%;
+
+    }
+
+
+    .mapboxgl-ctrl-geocoder--input {
+        height: 18px;
+        padding: 18px 40px;
+        font-size: 11px;
+        background-color: #480202;
+        text-align: center;
+        font-weight: bold;
+        color: white !important;
+
+    }
+
+
+    #map {
+
+        height: 91vh;
+        width: 100%;
+        position: relative;
+        cursor: pointer !important;
+
+
+    }
+
+
+
+}
+
+/* for small screen */
+
+@media (max-width:769px) {
+
+
+    #map {
+
+        height: 70vh;
+        width: 100%;
+        position: relative;
+        cursor: pointer !important;
+
+
+    }
+
+
+    .boxLegend {
+
+        position: absolute;
+        width: 30%;
+        bottom: 482px;
+        left: 120px;
+        font-size: x-small;
+
+    }
+
+
+    .navbar1>h3 {
+
+        margin-right: 2rem !important;
+        margin-left: 0rem !important;
+
+
+
+    }
+
+    .tahun {
+
+        position: absolute;
+        left: 10px;
+    }
+
+
+    .title {
+
+        position: absolute;
+        top: 0;
+        left: 10px;
+        color: red;
+        text-align: center;
+
+    }
+
+
+    .boxYear {
+
+        position: absolute;
+        width: 90%;
+        bottom: 570px;
+        left: 30px;
+        background-color: rgba(95, 38, 38, 0.7);
+
+    }
+
+
+
+    .tahun {
+
+        position: absolute;
+        top: 200px;
+        color: #f5f5f56b;
+        font-size: 150px;
+        left: 15%;
+        pointer-events: none;
+
+    }
+
+
+
+    .mapboxgl-ctrl-geocoder--input {
+        height: 18px;
+        padding: 18px 40px;
+        font-size: 11px;
+        /* background-color: #1d1818;
+        text-align: center; */
+        font-weight: bold;
+        /* color: white !important; */
+
+
+
+    }
+
+
+
+}
+
+
+
+.legend {
+
+    width: 100%;
+    height: 15px;
+    background-image: linear-gradient(to right, hsl(0, 82%, 100%), hsl(0, 100%, 33%));
+
+}
+
+
+
+.boxLegend {
+
+    background-color: rgba(2, 2, 2, 0.70);
+    padding: 10px;
+
+
+}
+
+.boxLegend>p {
+
+    color: white;
+    text-align: center;
+    font-size: x-small;
+    padding-bottom: 0.4rem;
+    margin: 0;
+}
+
+
+.year {
+
+    width: 100%;
+
+}
+
+.small-tx {
+    font-size: 9px;
+
+}
+
+.box-wraper {
+    top: 0;
+    bottom: 0;
+    right: 0;
+}
+
+
+.box {
+    background-color: #38040ec7;
+}
+
+
+
+/* slider */
+
+.slider {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 15px;
+}
+
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: red;
+    cursor: pointer;
+
+}
+
+.slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: red;
+    cursor: pointer;
+
+}
